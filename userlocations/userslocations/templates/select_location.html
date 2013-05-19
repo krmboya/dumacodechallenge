@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Select location {% endblock %}
+
+{% block content %}
+
+<form method="post">{% csrf_token %}
+  <label for="id_{{ label }}"> {{ label }} </label>: 
+  {% if form.county %}
+  {{ form.county }}
+  {{ form.county.errors }}
+  {% elif form.ward %}
+  {{ form.ward }}
+  {{ form.ward.errors }}
+  {% else %}
+  {{ form.location }}
+  {{ form.location.errors }}
+  {% endif %}
+  <input type="submit" value="Submit {{ label }}" />
+</form>
+
+{% endblock %}

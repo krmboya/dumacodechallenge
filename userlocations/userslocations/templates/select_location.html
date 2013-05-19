@@ -15,7 +15,9 @@
   {% else %}
   {{ form.location }}
   {{ form.location.errors }}
-  {% endif %}
+  {% endif %} <br />
+  <label for="id_other"> other: </label>
+  <input type="text" placeholder="Can't find your location? Insert name here." />
   <input type="submit" value="Submit {{ label }}" />
 </form>
 

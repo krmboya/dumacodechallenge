@@ -27,6 +27,14 @@ def select_user(request, template_name='select_option.html'):
 def select_location(request, template_name='select_location.html'):
     label = ''
     if request.method == 'POST':
+        if request.POST.get('other') and not request.POST.get('location'):
+            form = forms.BaseForm(request.POST)
+            if form.is_valid():
+                mapping = models.Mapping.objects.add_location(name=form.cleaned_data['other'],
+                                                              profile=request.session.get('user_profile'))
+                request.session['mapping'] = mapping
+                return HttpResponseRedirect(reverse(show_assignment))
+            
         if request.POST.get('county'):
             form = forms.CountyForm(request.POST)
             if form.is_valid():
@@ -34,6 +42,7 @@ def select_location(request, template_name='select_location.html'):
                 form = forms.get_ward_form(county)
                 request.session['county'] = county
                 label = 'ward'
+
         if request.POST.get('ward'):
             form = forms.get_ward_form(request.session['county'])
             form = form(request.POST)
@@ -42,9 +51,11 @@ def select_location(request, template_name='select_location.html'):
                 form = forms.get_location_form(ward)
                 request.session['ward'] = ward
                 label = 'location'
+
         if request.POST.get('location'):
+            label = 'location'
             form = forms.get_location_form(request.session['ward'])
-            form = form(request.POST)
+            form = form(request.POST); print request.POST
             if form.is_valid():
                 location = get_object_or_404(Location, pk=int(form.cleaned_data['location']))
                 mapping = models.Mapping(

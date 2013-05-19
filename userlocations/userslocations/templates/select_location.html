@@ -17,8 +17,10 @@
   {{ form.location.errors }}
   {% endif %} <br />
   <label for="id_other"> other: </label>
-  <input type="text" placeholder="Can't find your location? Insert name here." />
+  <input type="text" placeholder="Can't find your location? Insert name here." name="other"/>
   <input type="submit" value="Submit {{ label }}" />
+  
+  {{ form.non_field_errors }}
 </form>
 
 {% endblock %}

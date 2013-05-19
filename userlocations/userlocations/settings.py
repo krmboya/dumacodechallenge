@@ -161,3 +161,11 @@ LOGGING = {
         },
     }
 }
+
+
+# email settings
+
+EMAIL_RECEPIENT = 'krmboya@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

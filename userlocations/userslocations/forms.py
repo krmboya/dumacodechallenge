@@ -13,7 +13,7 @@ counties = ((county.pk, "%s" %
 
 class BaseForm(forms.Form):
     other = forms.CharField(required=False)
-
+    
 class CountyForm(BaseForm):
     county = forms.ChoiceField(choices=counties, required=False)
 
@@ -38,5 +38,18 @@ def get_location_form(ward):
     
     class LocationForm(BaseForm):
         location = forms.ChoiceField(choices=locations, required=False)
+        
+        def clean(self):
+            cleaned_data = super(LocationForm, self).clean()
+            location = cleaned_data.get('location')
+            other = cleaned_data.get('other')
+            print location; print other; print cleaned_data
+            if location and other:
+                location = Location.objects.get(pk=int(location)).name
+                raise forms.ValidationError("Please select one location. "
+                                            "You can't have both '%s' and '%s'" %
+                                            (location, other))
+            return cleaned_data
+
         
     return LocationForm

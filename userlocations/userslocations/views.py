@@ -32,7 +32,18 @@ def select_location(request, template_name='select_location.html'):
             if form.is_valid():
                 county = get_object_or_404(County, pk=int(form.cleaned_data['county']))
                 form = forms.get_ward_form(county)
+                request.session['county'] = county
                 label = 'ward'
+        if request.POST.get('ward'):
+            form = forms.get_ward_form(request.session['county'])
+            form = form(request.POST)
+            if form.is_valid():
+                ward = get_object_or_404(Ward, pk=int(form.cleaned_data['ward']))
+                form = forms.get_location_form(ward)
+                request.session['ward'] = ward
+                label = 'location'
+        if request.POST.get('location'):
+            pass
     if request.method == 'GET':
         form = forms.CountyForm()
         label = 'county'

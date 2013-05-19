@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'south',
     'locations',
     'userprofile',
+    'userslocations',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

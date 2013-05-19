@@ -1,6 +1,21 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
+    <style media="screen" type="text/css">
+      body {
+        background-color: #1111ee;
+        color: white;
+      }
+      .orange {
+        background-color: orange;
+        color: white;
+      }
+      .errorlist {
+        background-color: white;
+        color: red;
+        list-style: none;
+      }
+    </style>
   </head>
   <body>
     {% block content %}

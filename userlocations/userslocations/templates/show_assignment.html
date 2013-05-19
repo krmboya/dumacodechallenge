@@ -3,9 +3,9 @@
 {% block title %} User - location {% endblock %}
 
 {% block content %}
-
-<label>Name:</label> <input type="text" value="{{ name }}"/><br />
-<label>Phone number:</label> <input type="text" value="{{ tel_no }}"/><br />
-<label>Location:</label> <input type="text" value="{{ location }}"/>
-
+<table>
+<tr><td><label>Name:</label></td> <td><input type="text" value="{{ name }}"/></td></tr>
+<td><label>Phone number:</label> <td><input type="text" value="{{ tel_no }}"/></td></tr>
+<td><label>Location:</label> <td><input type="text" value="{{ location }}"/></td></tr>
+</table>
 {% endblock %}

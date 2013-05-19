@@ -43,7 +43,19 @@ def select_location(request, template_name='select_location.html'):
                 request.session['ward'] = ward
                 label = 'location'
         if request.POST.get('location'):
-            pass
+            form = forms.get_location_form(request.session['ward'])
+            form = form(request.POST)
+            if form.is_valid():
+                location = get_object_or_404(Location, pk=int(form.cleaned_data['location']))
+                mapping = models.Mapping(
+                    profile=request.session['user_profile'],
+                    location=location)
+                mapping.save()
+                request.session['mapping'] = mapping
+                request.session['county'] = None
+                request.session['ward'] = None
+                request.session['user_profile'] = None
+                return HttpResponseRedirect(reverse(show_assignment))
     if request.method == 'GET':
         form = forms.CountyForm()
         label = 'county'
@@ -51,3 +63,18 @@ def select_location(request, template_name='select_location.html'):
                               {'form': form,
                                'label': label},
                               context_instance=RequestContext(request))
+
+
+def show_assignment(request, template_name="show_assignment.html"):
+    mapping = request.session.get('mapping')
+    if mapping:
+        name = "%s %s" % (mapping.profile.user.first_name,
+                          mapping.profile.user.last_name)
+        tel_no = mapping.profile.telephone_number
+        location = "%s, %s" % (mapping.location.name,
+                               mapping.location.ward.county.name)
+        return render_to_response(template_name,
+                                  {'name': name,
+                                   'tel_no': tel_no,
+                                   'location': location},
+                                  context_instance=RequestContext(request))

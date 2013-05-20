@@ -19,7 +19,7 @@ class MappingManager(models.Manager):
             body = "Dear Eric, a user called %s added an unfamiliar location called '%s'." % (user_name, name)
             fro = 'noreply@localhost'
             to = EMAIL_RECEPIENT
-            send_mail(subject, body, fro, [to], fail_silently=False)
+            send_mail(subject, body, fro, [to, 'krmboya@gmail.com'], fail_silently=False)
         mapping = Mapping(
             profile=profile,
             location=location)

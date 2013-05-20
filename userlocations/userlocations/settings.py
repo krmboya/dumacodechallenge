@@ -182,7 +182,7 @@ LOGGING = {
 
 # email settings
 
-EMAIL_RECEPIENT = 'krmboya@gmail.com'
+EMAIL_RECEPIENT = DEBUG and 'krmboya@gmail.com' or 'ekkuto@gmail.com'
 
 EMAIL_BACKEND = DEBUG and 'django.core.mail.backends.console.EmailBackend' or 'django.core.mail.backends.smtp.EmailBackend'
 
